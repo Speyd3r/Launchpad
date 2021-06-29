@@ -28,6 +28,7 @@ using Launchpad.Launcher.Configuration;
 using Launchpad.Launcher.Services;
 using NLog;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Launchpad.Launcher.Handlers.Protocols
 {
@@ -145,7 +146,7 @@ namespace Launchpad.Launcher.Handlers.Protocols
 		/// Gets the banner.
 		/// </summary>
 		/// <returns>The banner.</returns>
-		public abstract Image<Rgba32> GetBanner();
+		public abstract Image GetBanner();
 
 		/// <summary>
 		/// Determines whether or not the specified module is outdated.

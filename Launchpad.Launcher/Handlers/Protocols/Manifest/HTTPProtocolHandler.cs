@@ -29,6 +29,7 @@ using Launchpad.Common;
 using Launchpad.Common.Enums;
 using NLog;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace Launchpad.Launcher.Handlers.Protocols.Manifest
@@ -123,7 +124,7 @@ namespace Launchpad.Launcher.Handlers.Protocols.Manifest
 			var localBannerPath = Path.Combine(Path.GetTempPath(), "banner.png");
 
 			DownloadRemoteFile(bannerURL, localBannerPath);
-			return Image.Load(localBannerPath);
+			return (Image<Rgba32>)Image.Load(localBannerPath);
 		}
 
 		/// <inheritdoc />

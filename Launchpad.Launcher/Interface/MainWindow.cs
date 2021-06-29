@@ -22,6 +22,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using Gdk;
 using GLib;
@@ -38,6 +39,8 @@ using Launchpad.Launcher.Utility.Enums;
 using NGettext;
 using NLog;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Processing;
 using Application = Gtk.Application;
 using Process = System.Diagnostics.Process;
 using Task = System.Threading.Tasks.Task;
@@ -293,10 +296,17 @@ namespace Launchpad.Launcher.Interface
 
 					bannerImage.Mutate(i => i.Resize(this.BannerImage.AllocatedWidth, 0));
 
-					// Load the image into a pixel buffer
+					byte[] img = default;
+					using (var ms = new MemoryStream())
+					{
+						bannerImage.Save(ms, new JpegEncoder());
+						ms.Position = 0;
+						img = ms.ToArray();
+					}
+
 					return new Pixbuf
 					(
-						Bytes.NewStatic(bannerImage.SavePixelData()),
+						Bytes.NewStatic(img),
 						Colorspace.Rgb,
 						true,
 						8,
